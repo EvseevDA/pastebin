@@ -1,8 +1,9 @@
-package com.github.evseevda.pastebin.hashgenerator.hashgenerator.service;
+package com.github.evseevda.pastebin.hashgenerator.service.impl;
 
 import com.github.evseevda.pastebin.hashgenerator.converter.ToHashConverter;
-import com.github.evseevda.pastebin.hashgenerator.redis.service.RedisService;
 import com.github.evseevda.pastebin.hashgenerator.hashseed.service.HashSeedService;
+import com.github.evseevda.pastebin.hashgenerator.redis.service.RedisService;
+import com.github.evseevda.pastebin.hashgenerator.service.api.HashGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,14 @@ public class HashGeneratorServiceImpl implements HashGeneratorService {
     @Override
     public String generateHash() {
         if (redisService.hashesIsEmpty()) {
-            List<String> hashes = hashSeedService.getNextSeeds(hashCacheSize).stream()
-                    .map(hashConverter::convert)
-                    .toList();
-            redisService.saveHashes(hashes);
+            synchronized (this) {
+                if (redisService.hashesIsEmpty()) {
+                    List<String> hashes = hashSeedService.getNextSeeds(hashCacheSize).stream()
+                            .map(hashConverter::convert)
+                            .toList();
+                    redisService.saveHashes(hashes);
+                }
+            }
         }
         return redisService.getHashAndRemove();
     }
