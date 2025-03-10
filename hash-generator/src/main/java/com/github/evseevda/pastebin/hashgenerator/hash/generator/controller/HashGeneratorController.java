@@ -1,4 +1,4 @@
-package com.github.evseevda.pastebin.hashgenerator.service.api;
+package com.github.evseevda.pastebin.hashgenerator.hash.generator.controller;
 
 import org.springframework.http.ResponseEntity;
 

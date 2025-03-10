@@ -1,4 +1,4 @@
-package com.github.evseevda.pastebin.hashgenerator.hashseed.service;
+package com.github.evseevda.pastebin.hashgenerator.hash.seed.service;
 
 import com.github.evseevda.pastebin.hashgenerator.util.db.DatabaseOperations;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class DatabaseSequenceHashSeedService implements HashSeedService {
     private String hashSeedSequenceName;
 
     @Override
-    public List<Integer> getNextSeeds(int n) {
-        return databaseOperations.getNIntegersFromSequence(n, hashSeedSequenceName);
+    public List<Integer> getNextSeeds(int count) {
+        return databaseOperations.getNIntegersFromSequence(count, hashSeedSequenceName);
     }
 }

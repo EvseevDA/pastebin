@@ -1,4 +1,4 @@
-package com.github.evseevda.pastebin.hashgenerator.converter;
+package com.github.evseevda.pastebin.hashgenerator.hash.converter;
 
 public interface ToHashConverter<S> {
 

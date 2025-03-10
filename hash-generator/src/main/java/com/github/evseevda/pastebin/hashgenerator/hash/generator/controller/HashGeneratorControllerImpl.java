@@ -1,7 +1,6 @@
-package com.github.evseevda.pastebin.hashgenerator.service.impl;
+package com.github.evseevda.pastebin.hashgenerator.hash.generator.controller;
 
-import com.github.evseevda.pastebin.hashgenerator.service.api.HashGeneratorController;
-import com.github.evseevda.pastebin.hashgenerator.service.api.HashGeneratorService;
+import com.github.evseevda.pastebin.hashgenerator.hash.generator.service.HashGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
