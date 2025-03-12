@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: hash-generator
+  datasource:
+    url: jdbc:tc:postgresql:16:///pastebin_hash_generator_db?TC_DAEMON=true
+    username: postgres
+    password: postgres
+    hash-seed-sequence-name: hash_seed_seq
+  data:
+    redis:
+      host: _
+      port: 1
+      database: 0
+      password: _
+
+hash:
+  properties:
+    cache:
+      size: 1
+      redis-key-name: _
+    length:
+      upper-bound: 16

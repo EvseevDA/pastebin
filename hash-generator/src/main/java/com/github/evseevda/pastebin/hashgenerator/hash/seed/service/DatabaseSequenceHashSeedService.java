@@ -20,4 +20,5 @@ public class DatabaseSequenceHashSeedService implements HashSeedService {
     public List<Integer> getNextSeeds(int count) {
         return databaseOperations.getNIntegersFromSequence(count, hashSeedSequenceName);
     }
+
 }
