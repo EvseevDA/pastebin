@@ -17,14 +17,14 @@ public class HashGeneratorServiceImpl implements HashGeneratorService {
     private final HashSeedService hashSeedService;
     private final RedisService redisService;
     private final ToHashConverter<Integer> hashConverter;
-    private final LockUtils lockUtils;
+    private final LockUtils prototypeLockUtils;
 
     @Value("${hash.properties.cache.size}")
     private int hashCacheSize;
 
     @Override
     public String generateHash() {
-        lockUtils.lockAndExecuteIf(redisService::hashesIsEmpty, this::generateAndCacheHashes);
+        prototypeLockUtils.lockAndExecuteIf(redisService::hashesIsEmpty, this::generateAndCacheHashes);
         return redisService.getHashAndRemove();
     }
 
