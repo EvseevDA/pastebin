@@ -32,8 +32,7 @@ class DatabaseSequenceHashSeedServiceTest {
         hashSeedService.getNextSeeds(3);
 
         // assertion
-        verify(databaseOperations, times(1))
-                .getNIntegersFromSequence(anyInt(), any());
+        verify(databaseOperations).getNIntegersFromSequence(anyInt(), any());
     }
 
     @Test

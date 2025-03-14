@@ -1,5 +1,6 @@
 package com.github.evseevda.pastebin.hashgenerator.hash.generator.controller;
 
+import com.github.evseevda.pastebin.hashgenerator.hash.dto.HashResponse;
 import com.github.evseevda.pastebin.hashgenerator.hash.generator.service.HashGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,9 @@ public class HashGeneratorControllerImpl implements HashGeneratorController {
 
     @Override
     @GetMapping
-    public ResponseEntity<String> getNewHash() {
+    public ResponseEntity<HashResponse> getNewHash() {
         return ResponseEntity.ok(
-                hashGeneratorService.generateHash()
+                HashResponse.of(hashGeneratorService.generateHash())
         );
     }
 

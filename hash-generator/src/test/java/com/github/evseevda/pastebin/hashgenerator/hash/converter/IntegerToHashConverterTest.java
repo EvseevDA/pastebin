@@ -16,11 +16,11 @@ class IntegerToHashConverterTest {
 
     private static final int REQUIRED_HASH_LENGTH = 16;
 
-    private static IntegerToHashConverter CONVERTER;
+    private static IntegerToHashConverter converter;
 
     @BeforeAll
     static void setUpForAll() {
-        CONVERTER = new IntegerToHashConverter();
+        converter = new IntegerToHashConverter();
     }
 
     @Test
@@ -29,7 +29,7 @@ class IntegerToHashConverterTest {
         int seed = 1;
 
         // action
-        String hash = CONVERTER.convert(seed);
+        String hash = converter.convert(seed);
 
         // assertion
         assertTrue(hash.length() <= REQUIRED_HASH_LENGTH);
@@ -41,7 +41,7 @@ class IntegerToHashConverterTest {
         int seed = Integer.MAX_VALUE;
 
         // action
-        String hash = CONVERTER.convert(seed);
+        String hash = converter.convert(seed);
 
         // assertion
         assertTrue(hash.length() <= REQUIRED_HASH_LENGTH);
@@ -53,10 +53,10 @@ class IntegerToHashConverterTest {
         int count = 1_000_000;
 
         // action
-        int mid = Integer.MAX_VALUE / 2;
+        int seedRangeMid = Integer.MAX_VALUE / 2;
         List<String> generatedHashes = new ArrayList<>();
-        for (int i = mid; i < mid + count; i++) {
-            generatedHashes.add(CONVERTER.convert(i));
+        for (int i = seedRangeMid; i < seedRangeMid + count; i++) {
+            generatedHashes.add(converter.convert(i));
         }
         Set<String> uniqueHashes = new HashSet<>(generatedHashes);
 

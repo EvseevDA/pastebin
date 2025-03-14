@@ -1,23 +1,48 @@
 package com.github.evseevda.pastebin.hashgenerator.hash.generator.service;
 
-import com.github.evseevda.pastebin.hashgenerator.config.CommonTestConfig;
-import com.redis.testcontainers.RedisContainer;
+import com.github.evseevda.pastebin.hashgenerator.hash.converter.ToHashConverter;
+import com.github.evseevda.pastebin.hashgenerator.hash.seed.service.HashSeedService;
+import com.github.evseevda.pastebin.hashgenerator.redis.service.RedisService;
+import com.github.evseevda.pastebin.hashgenerator.util.lock.LockUtils;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
-
-@SpringBootTest(classes = CommonTestConfig.class)
+@ExtendWith(MockitoExtension.class)
 class HashGeneratorServiceImplTest {
 
-    @Autowired
-    private RedisContainer redisContainer;
+    @Mock
+    private ToHashConverter<Integer> toHashConverter;
+
+    @Mock
+    private HashSeedService hashSeedService;
+
+    @Mock
+    private RedisService redisService;
+
+    @Mock
+    private LockUtils lockUtils;
+
+    @InjectMocks
+    private HashGeneratorServiceImpl hashGeneratorService;
 
     @Test
-    void givenRedisContainer_WhenCheckingRunningStatus_ThenStatusIsRunning() {
-        assertTrue(redisContainer.isRunning());
+    void givenHashGenerator_WhenGenerateCashIsCalled_ThenLockUtilsLockAndExecuteIfAndRedisServiceGetHashAndRemoveIsCalled() {
+        // arrange
+        doNothing().when(lockUtils).lockAndExecuteIf(any(), any());
+        when(redisService.getHashAndRemove()).thenReturn("");
+
+        // action
+        hashGeneratorService.generateHash();
+
+        // assertion
+        verify(lockUtils).lockAndExecuteIf(any(), any());
+        verify(redisService).getHashAndRemove();
     }
 
 }
